@@ -1,5 +1,6 @@
+'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import authService, { RegisterCredentials } from '../services/auth';
 
 export default function Signup() {
@@ -37,7 +38,7 @@ export default function Signup() {
 
   return (
     <div>
-      <h2>Create your account</h2>
+      <h1>Signup</h1>
       <form onSubmit={handleSubmit}>
         {error && <div>{error}</div>}
         

@@ -1,6 +1,8 @@
+'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import authService, { LoginCredentials } from '../services/auth';
+import Link from 'next/link';
 
 export default function Login() {
   const router = useRouter();
@@ -19,7 +21,7 @@ export default function Login() {
 
     try {
       await authService.login(credentials);
-      router.push('/dashboard');
+      router.push('/');
     } catch (err) {
       setError('Invalid email or password');
     } finally {
@@ -37,7 +39,7 @@ export default function Login() {
 
   return (
     <div>
-      <h2>Sign in to your account</h2>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         {error && <div>{error}</div>}
         
