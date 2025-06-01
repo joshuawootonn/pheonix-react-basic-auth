@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:4000'; // Update this to match your Phoenix server URL
+const API_URL = 'http://localhost:4567'; // Update this to match your Phoenix server URL
 
 export interface LoginCredentials {
   email: string;
