@@ -11,7 +11,7 @@ defmodule TestElixirAuthWeb.UserRegistrationController do
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
             user,
-            fn token -> "http://localhost:3000/users/confirm/#{token}" end
+            fn token -> "http://localhost:3000/confirm-email/#{token}" end
           )
 
         conn

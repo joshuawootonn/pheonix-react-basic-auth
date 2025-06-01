@@ -39,6 +39,14 @@ export interface UpdatePasswordCredentials {
   password_confirmation: string;
 }
 
+export interface ConfirmEmailResponse {
+  status: string;
+  message: string;
+  user?: {
+    email: string;
+  };
+}
+
 const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
     const response = await fetch(`${API_URL}/api/users/log_in`, {
@@ -131,6 +139,22 @@ const authService = {
     } catch (error) {
       return null;
     }
+  },
+
+  async confirmEmail(token: string): Promise<ConfirmEmailResponse> {
+    const response = await fetch(`${API_URL}/api/users/confirm/${token}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+
+    if (!response.ok) {
+      throw new Error('Failed to confirm email');
+    }
+
+    return response.json();
   }
 };
 

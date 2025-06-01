@@ -48,7 +48,10 @@ defmodule TestElixirAuthWeb.Router do
   end
 
   ## Authentication routes
-
+  scope "/", TestElixirAuthWeb do
+    pipe_through [:api]
+    post "/api/users/confirm/:token", UserConfirmationController, :update
+  end
 
   scope "/", TestElixirAuthWeb do
     pipe_through [:api, :redirect_if_user_is_authenticated]
@@ -67,14 +70,4 @@ defmodule TestElixirAuthWeb.Router do
   end
 
 
- 
-
-  scope "/", TestElixirAuthWeb do
-    pipe_through [:browser]
-
-    get "/users/confirm", UserConfirmationController, :new
-    post "/users/confirm", UserConfirmationController, :create
-    get "/users/confirm/:token", UserConfirmationController, :edit
-    post "/users/confirm/:token", UserConfirmationController, :update
-  end
 end
