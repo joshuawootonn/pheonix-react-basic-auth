@@ -12,6 +12,10 @@ export interface RegisterCredentials {
   password_confirmation: string;
 }
 
+export interface ForgotPasswordCredentials {
+  email: string;
+}
+
 export interface AuthResponse {
   user: {
     email: string;
@@ -28,6 +32,11 @@ export interface User {
 export interface UserResponse {
   status: string;
   user: User;
+}
+
+export interface UpdatePasswordCredentials {
+  password: string;
+  password_confirmation: string;
 }
 
 const authService = {
@@ -65,6 +74,22 @@ const authService = {
     return response.json();
   },
 
+  async forgotPassword(credentials: ForgotPasswordCredentials): Promise<AuthResponse> {
+    const response = await fetch(`${API_URL}/api/users/reset_password`, {
+      method: 'POST',
+      body: JSON.stringify({ user: { email: credentials.email } }),
+      headers: {
+        'Content-Type': 'application/json',
+      }, 
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to send reset password email');
+    }
+
+    return response.json();
+  },
+
   async logout(): Promise<void> {
     const response = await fetch(`${API_URL}/api/users/log_out`, {
       method: 'DELETE',
@@ -74,6 +99,22 @@ const authService = {
     if (!response.ok) {
       throw new Error('Logout failed');
     }
+  },
+
+  async updatePassword(token: string, credentials: UpdatePasswordCredentials): Promise<AuthResponse> {
+    const response = await fetch(`${API_URL}/api/users/reset_password/${token}`, {
+      method: 'PUT',
+      body: JSON.stringify({ user: credentials }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update password');
+    }
+
+    return response.json();
   },
 
   async getCurrentUser(): Promise<AuthResponse | null> {

@@ -1,17 +1,18 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import authService, { LoginCredentials } from "../services/auth";
-import Link from "next/link";
+import authService from "../services/auth";
 
-export default function Login() {
+export default function UpdatePassword({ token }: { token: string }) {
   const router = useRouter();
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState(false);
-  const [credentials, setCredentials] = useState<LoginCredentials>({
-    email: "",
+  const [credentials, setCredentials] = useState<{
+    password: string;
+    password_confirmation: string;
+  }>({
     password: "",
-    remember_me: false,
+    password_confirmation: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -20,7 +21,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await authService.login(credentials);
+      await authService.updatePassword(token, credentials);
       router.push("/");
     } catch (err) {
       setError("Invalid email or password");
@@ -39,21 +40,9 @@ export default function Login() {
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Update password</h1>
       <form onSubmit={handleSubmit}>
         {error && <div>{error}</div>}
-
-        <div>
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            value={credentials.email}
-            onChange={handleChange}
-          />
-        </div>
 
         <div>
           <label htmlFor="password">Password</label>
@@ -68,21 +57,21 @@ export default function Login() {
         </div>
 
         <div>
+          <label htmlFor="password_confirmation">Password confirmation</label>
           <input
-            id="remember_me"
-            name="remember_me"
-            type="checkbox"
-            checked={credentials.remember_me}
+            id="password_confirmation"
+            name="password_confirmation"
+            type="password"
+            required
+            value={credentials.password_confirmation}
             onChange={handleChange}
           />
-          <label htmlFor="remember_me">Remember me</label>
         </div>
 
         <button type="submit" disabled={loading}>
-          {loading ? "Signing in..." : "Sign in"}
+          {loading ? "Updating password..." : "Update password"}
         </button>
       </form>
-      <Link href="/forgot-password">Forgot password?</Link>
     </div>
   );
 }
