@@ -15,6 +15,8 @@ defmodule TestElixirAuthWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_current_user
   end
 
   scope "/", TestElixirAuthWeb do
@@ -46,6 +48,13 @@ defmodule TestElixirAuthWeb.Router do
   end
 
   ## Authentication routes
+
+
+  scope "/", TestElixirAuthWeb do
+    pipe_through [:api, :redirect_if_user_is_authenticated]
+
+    post "/api/users/log_in", UserSessionController, :create
+  end
 
   scope "/", TestElixirAuthWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]

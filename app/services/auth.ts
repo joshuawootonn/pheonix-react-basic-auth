@@ -21,7 +21,7 @@ export interface AuthResponse {
 
 const authService = {
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    const response = await fetch(`${API_URL}/users/log_in`, {
+    const response = await fetch(`${API_URL}/api/users/log_in`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const authService = {
   },
 
   async register(credentials: RegisterCredentials): Promise<AuthResponse> {
-    const response = await fetch(`${API_URL}/users/register`, {
+    const response = await fetch(`${API_URL}/api/users/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const authService = {
   },
 
   async logout(): Promise<void> {
-    const response = await fetch(`${API_URL}/users/log_out`, {
+    const response = await fetch(`${API_URL}/api/users/log_out`, {
       method: 'DELETE',
       credentials: 'include'
     });
@@ -67,7 +67,7 @@ const authService = {
 
   async getCurrentUser(): Promise<AuthResponse | null> {
     try {
-      const response = await fetch(`${API_URL}/users/me`, {
+      const response = await fetch(`${API_URL}/api/users/me`, {
         credentials: 'include'
       });
 
