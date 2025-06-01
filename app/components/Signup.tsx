@@ -20,7 +20,7 @@ export default function Signup() {
 
     try {
       await authService.register(credentials);
-      router.push('/dashboard');
+      router.push('/');
     } catch (err) {
       setError('Registration failed. Please check your information and try again.');
     } finally {

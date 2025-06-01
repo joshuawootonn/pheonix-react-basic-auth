@@ -5,11 +5,6 @@ defmodule TestElixirAuthWeb.UserRegistrationController do
   alias TestElixirAuth.Accounts.User
   alias TestElixirAuthWeb.UserAuth
 
-  def new(conn, _params) do
-    changeset = Accounts.change_user_registration(%User{})
-    render(conn, :new, changeset: changeset)
-  end
-
   def create(conn, %{"user" => user_params}) do
     case Accounts.register_user(user_params) do
       {:ok, user} ->
@@ -20,11 +15,31 @@ defmodule TestElixirAuthWeb.UserRegistrationController do
           )
 
         conn
-        |> put_flash(:info, "User created successfully.")
         |> UserAuth.log_in_user(user)
+        |> json(%{
+          status: "success",
+          message: "User created successfully.",
+          user: %{
+            email: user.email
+          }
+        })
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, changeset: changeset)
+        conn
+        |> put_status(:unprocessable_entity)
+        |> json(%{
+          status: "error",
+          message: "Registration failed",
+          errors: translate_changeset_errors(changeset)
+        })
     end
+  end
+
+  defp translate_changeset_errors(changeset) do
+    Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
+      Enum.reduce(opts, msg, fn {key, value}, acc ->
+        String.replace(acc, "%{#{key}}", to_string(value))
+      end)
+    end)
   end
 end

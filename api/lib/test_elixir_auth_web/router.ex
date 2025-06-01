@@ -54,6 +54,7 @@ defmodule TestElixirAuthWeb.Router do
     pipe_through [:api, :redirect_if_user_is_authenticated]
 
     post "/api/users/log_in", UserSessionController, :create
+    post "/api/users/register", UserRegistrationController, :create
   end
 
   scope "/", TestElixirAuthWeb do
