@@ -65,7 +65,7 @@ config :phoenix, :json_library, Jason
 config :cors_plug,
   origin: ["http://localhost:3000"],
   max_age: 86400,
-  methods: ["GET", "POST"]
+  methods: ["GET", "POST", "DELETE"]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

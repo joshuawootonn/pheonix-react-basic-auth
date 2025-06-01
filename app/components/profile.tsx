@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import authService, { User } from '../services/auth';
+import Logout from './logout';
 
 
 export default function Profile() {
@@ -45,7 +46,9 @@ export default function Profile() {
       <div>
         <p><strong>Email:</strong> {user.email}</p>
         <p><strong>User ID:</strong> {user.id}</p>
+
       </div>
+      <Logout />
     </div>
   );
 } 
