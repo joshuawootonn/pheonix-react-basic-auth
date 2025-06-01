@@ -58,6 +58,12 @@ defmodule TestElixirAuthWeb.Router do
   end
 
   scope "/", TestElixirAuthWeb do
+    pipe_through [:api, :require_authenticated_user]
+
+    get "/api/users/me", UserSessionController, :read
+  end
+
+  scope "/", TestElixirAuthWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     get "/users/register", UserRegistrationController, :new

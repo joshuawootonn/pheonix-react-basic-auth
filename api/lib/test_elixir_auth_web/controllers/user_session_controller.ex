@@ -37,4 +37,15 @@ defmodule TestElixirAuthWeb.UserSessionController do
       message: "Logged out successfully."
     })
   end
+
+  def read(conn, _params) do
+    user = conn.assigns.current_user
+    json(conn, %{
+      status: "success",
+      user: %{
+        email: user.email,
+        id: user.id
+      }
+    })
+  end
 end

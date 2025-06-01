@@ -15,8 +15,19 @@ export interface RegisterCredentials {
 export interface AuthResponse {
   user: {
     email: string;
+    id: number;
   };
-  token: string;
+  status: string;
+}
+
+export interface User {
+  id: number;
+  email: string;
+}
+
+export interface UserResponse {
+  status: string;
+  user: User;
 }
 
 const authService = {
