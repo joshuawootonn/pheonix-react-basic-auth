@@ -2,7 +2,6 @@ defmodule TestElixirAuthWeb.UserRegistrationController do
   use TestElixirAuthWeb, :controller
 
   alias TestElixirAuth.Accounts
-  alias TestElixirAuth.Accounts.User
   alias TestElixirAuthWeb.UserAuth
 
   def create(conn, %{"user" => user_params}) do

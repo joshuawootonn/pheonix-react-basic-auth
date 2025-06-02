@@ -12,6 +12,7 @@ defmodule TestElixirAuthWeb.UserSessionControllerTest do
     test "logs the user in", %{conn: conn, user: user} do
       conn = get(conn, ~p"/api/users/me")
       response = json_response(conn, 401)
+      assert response["message"] == "Unauthorized"
 
       conn =
         post(conn, ~p"/api/users/log_in", %{
