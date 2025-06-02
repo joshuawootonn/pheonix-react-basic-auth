@@ -51,6 +51,7 @@ defmodule TestElixirAuthWeb.Router do
   scope "/", TestElixirAuthWeb do
     pipe_through [:api]
     post "/api/users/confirm/:token", UserConfirmationController, :update
+    delete "/api/users/log_out", UserSessionController, :delete
   end
 
   scope "/", TestElixirAuthWeb do
@@ -66,7 +67,6 @@ defmodule TestElixirAuthWeb.Router do
     pipe_through [:api, :require_authenticated_user]
 
     get "/api/users/me", UserSessionController, :read
-    delete "/api/users/log_out", UserSessionController, :delete
   end
 
 
