@@ -28,14 +28,6 @@ export default function Signup() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCredentials(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
   return (
     <div>
       <h1>Signup</h1>
@@ -50,7 +42,7 @@ export default function Signup() {
             type="email"
             required
             value={credentials.email}
-            onChange={handleChange}
+            onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
           />
         </div>
 
@@ -62,7 +54,7 @@ export default function Signup() {
             type="password"
             required
             value={credentials.password}
-            onChange={handleChange}
+            onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
           />
         </div>
 
@@ -74,7 +66,7 @@ export default function Signup() {
             type="password"
             required
             value={credentials.password_confirmation}
-            onChange={handleChange}
+            onChange={(e) => setCredentials({ ...credentials, password_confirmation: e.target.value })}
           />
         </div>
 

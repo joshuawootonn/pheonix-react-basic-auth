@@ -30,14 +30,6 @@ export default function UpdatePassword({ token }: { token: string }) {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setCredentials((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
   return (
     <div>
       <h1>Update password</h1>
@@ -52,7 +44,9 @@ export default function UpdatePassword({ token }: { token: string }) {
             type="password"
             required
             value={credentials.password}
-            onChange={handleChange}
+            onChange={(e) =>
+              setCredentials({ ...credentials, password: e.target.value })
+            }
           />
         </div>
 
@@ -64,7 +58,12 @@ export default function UpdatePassword({ token }: { token: string }) {
             type="password"
             required
             value={credentials.password_confirmation}
-            onChange={handleChange}
+            onChange={(e) =>
+              setCredentials({
+                ...credentials,
+                password_confirmation: e.target.value,
+              })
+            }
           />
         </div>
 

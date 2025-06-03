@@ -1,13 +1,9 @@
 import Link from "next/link";
 import authService from "@/services/auth";
 
-interface ConfirmEmailPageProps {
-  params: {
-    token: string;
-  };
-}
-
-export default async function ConfirmEmailPage(props: ConfirmEmailPageProps) {
+export default async function ConfirmEmailPage(props: {
+  params: Promise<{ token: string }>;
+}) {
   const params = await props.params;
   const token = params.token;
 
@@ -22,7 +18,7 @@ export default async function ConfirmEmailPage(props: ConfirmEmailPageProps) {
         </div>
       </div>
     );
-  } catch (error) {
+  } catch (_) {
     return (
       <div>
         <h2>Failed to confirm email</h2>

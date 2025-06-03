@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import authService, { LoginCredentials } from "../services/auth";
+import authService from "../services/auth";
 import Link from "next/link";
 
 export default function ForgotPassword() {
@@ -12,7 +12,6 @@ export default function ForgotPassword() {
     email: "",
   });
 
-  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -26,14 +25,6 @@ export default function ForgotPassword() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setCredentials((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
   };
 
   return (
@@ -50,7 +41,9 @@ export default function ForgotPassword() {
             type="email"
             required
             value={credentials.email}
-            onChange={handleChange}
+            onChange={(e) =>
+              setCredentials({ ...credentials, email: e.target.value })
+            }
           />
         </div>
 

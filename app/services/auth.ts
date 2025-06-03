@@ -16,17 +16,14 @@ export interface ForgotPasswordCredentials {
   email: string;
 }
 
-export interface AuthResponse {
-  user: {
-    email: string;
-    id: number;
-  };
-  status: string;
-}
-
 export interface User {
   id: number;
   email: string;
+}
+
+export interface AuthResponse {
+  user: User;
+  status: string;
 }
 
 export interface UserResponse {

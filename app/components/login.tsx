@@ -51,7 +51,7 @@ export default function Login() {
             type="email"
             required
             value={credentials.email}
-            onChange={handleChange}
+            onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
           />
         </div>
 
@@ -63,20 +63,11 @@ export default function Login() {
             type="password"
             required
             value={credentials.password}
-            onChange={handleChange}
+            onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
           />
         </div>
 
-        <div>
-          <input
-            id="remember_me"
-            name="remember_me"
-            type="checkbox"
-            checked={credentials.remember_me}
-            onChange={handleChange}
-          />
-          <label htmlFor="remember_me">Remember me</label>
-        </div>
+       
 
         <button type="submit" disabled={loading}>
           {loading ? "Signing in..." : "Sign in"}
